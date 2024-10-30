@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
+import Pagination from "./Pagination";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -29,6 +30,7 @@ const Movies = () => {
           );
         })}
       </div>
+      <Pagination/>
     </div>
   );
 };
