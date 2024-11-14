@@ -5,17 +5,30 @@ import Pagination from "./Pagination";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [pageNo,setPageNo] = useState(1);
+
+  const handelPrev= () => {
+    if(pageNo===1){
+      setPageNo(pageNo)
+    }else{
+      setPageNo(pageNo -1)
+    }
+  }
+
+  const handelNext = () =>{
+    setPageNo(pageNo + 1)
+  }
 
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=39fba5af64ba3c9c0ce210bee2b374e5&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/popular?api_key=39fba5af64ba3c9c0ce210bee2b374e5&language=en-US&page=${pageNo}`
       )
       .then(function (res) {
-        console.log(res.data.results);
+      // console.log(res.data.results);
         setMovies(res.data.results);
       });
-  }, []);
+  }, [pageNo]);
 
   return (
     <div className="p-5">
@@ -24,13 +37,14 @@ const Movies = () => {
         {movies.map((movieObj) => {
           return (
             <MovieCard
+              key={movieObj.id} 
               poster_path={movieObj.poster_path}
               name={movieObj.original_title}
             />
           );
         })}
       </div>
-      <Pagination/>
+      <Pagination pageNo={pageNo} handelNext={handelNext} handelPrev={handelPrev} />
     </div>
   );
 };
