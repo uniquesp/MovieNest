@@ -11,7 +11,7 @@ const Movies = () => {
     if(pageNo===1){
       setPageNo(pageNo)
     }else{
-      setPageNo(pageNo -1)
+      setPageNo(pageNo-1)
     }
   }
 
