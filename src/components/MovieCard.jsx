@@ -10,7 +10,7 @@ const MovieCard = ({
 }) => {
   function doesContain(movieObj) {
     return watchList.some((movie) => movie.id === movieObj.id);
-  }
+  }  
 
   return (
     <div
