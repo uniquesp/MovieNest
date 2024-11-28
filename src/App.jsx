@@ -29,10 +29,10 @@ function App() {
       return 
     }
     setWatchList(JSON.parse(moviesFromLocalStorage))
-  })
+  }, [])
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar />  
       <Routes>
         <Route
           path="/"

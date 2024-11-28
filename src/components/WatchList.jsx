@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 const WatchList = ({ watchList, handelRemoveFromWatchList }) => {
+  const [search, setSearch] = useState("");
+
+  let handelSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <>
       <div className="flex justify-center flex-wrap m-4">
@@ -22,6 +28,8 @@ const WatchList = ({ watchList, handelRemoveFromWatchList }) => {
         <input
           type="text"
           className="h-[3rem] w-[18rem] bg-gray-200 outline-none px-4"
+          onChange={handelSearch}
+          value={search}
           placeholder="Search Movies"
         />
       </div>
@@ -44,26 +52,32 @@ const WatchList = ({ watchList, handelRemoveFromWatchList }) => {
                 </td>
               </tr>
             ) : (
-              watchList.map((movieObj) => (
-                <tr key={movieObj.id} className="border-b-2">
-                  <td className="flex items-center px-6 py-4">
-                    <img
-                      className="h-[7rem] w-[10rem]"
-                      src={`https://image.tmdb.org/t/p/original/${movieObj.backdrop_path}`}
-                      alt={movieObj.title || "Movie"}
-                    />
-                    <div className="mx-10">{movieObj.title}</div>
-                  </td>
-                  <td>{movieObj.vote_average || "N/A"}</td>
-                  <td>{movieObj.popularity || "N/A"}</td>
-                  <td
-                    className="text-red-800 cursor-pointer"
-                    onClick={() => handelRemoveFromWatchList(movieObj)}
-                  >
-                    Delete
-                  </td>
-                </tr>
-              ))
+              watchList
+                .filter((movieObj) => {
+                  return movieObj.title
+                    .toLowerCase()
+                    .includes(search.toLowerCase());
+                })
+                .map((movieObj) => (
+                  <tr key={movieObj.id} className="border-b-2">
+                    <td className="flex items-center px-6 py-4">
+                      <img
+                        className="h-[7rem] w-[10rem]"
+                        src={`https://image.tmdb.org/t/p/original/${movieObj.backdrop_path}`}
+                        alt={movieObj.title || "Movie"}
+                      />
+                      <div className="mx-10">{movieObj.title}</div>
+                    </td>
+                    <td>{movieObj.vote_average || "N/A"}</td>
+                    <td>{movieObj.popularity || "N/A"}</td>
+                    <td
+                      className="text-red-800 cursor-pointer"
+                      onClick={() => handelRemoveFromWatchList(movieObj)}
+                    >
+                      Delete
+                    </td>
+                  </tr>
+                ))
             )}
           </tbody>
         </table>
