@@ -11,28 +11,31 @@ function App() {
   const handelAddtoWatchList = (movieObj) => {
     if (!watchList.some((movie) => movie.id === movieObj.id)) {
       const newWatchList = [...watchList, movieObj];
-      localStorage.setItem('moviesApp',JSON.stringify(newWatchList))
+      localStorage.setItem("moviesApp", JSON.stringify(newWatchList));
       setWatchList(newWatchList);
-      console.log(newWatchList)
+      console.log(newWatchList);
     }
   };
 
   const handelRemoveFromWatchList = (movieObj) => {
-    const filteredWatchList = watchList.filter((movie) => movie.id !== movieObj.id);
+    const filteredWatchList = watchList.filter(
+      (movie) => movie.id !== movieObj.id
+    );
     setWatchList(filteredWatchList);
-    console.log(filteredWatchList)
+    localStorage.setItem("moviesApp", JSON.stringify(filteredWatchList));
+    console.log(filteredWatchList);
   };
 
-  useEffect( () =>{
-    let moviesFromLocalStorage = localStorage.getItem('moviesApp')
-    if(!moviesFromLocalStorage){
-      return 
+  useEffect(() => {
+    let moviesFromLocalStorage = localStorage.getItem("moviesApp");
+    if (!moviesFromLocalStorage) {
+      return;
     }
-    setWatchList(JSON.parse(moviesFromLocalStorage))
-  }, [])
+    setWatchList(JSON.parse(moviesFromLocalStorage));
+  }, []);
   return (
     <BrowserRouter>
-      <Navbar />  
+      <Navbar />
       <Routes>
         <Route
           path="/"
