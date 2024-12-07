@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import genresId from '../utility/genere.js'
 
 const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
   const [search, setSearch] = useState("");
@@ -67,6 +68,7 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
                   <i onClick={sortDecreasing} className="p-2 fa-solid fa-arrow-down cursor-pointer"></i>
                 </div>
               </th>
+              <th>Genere</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,6 +98,7 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
                     </td>
                     <td>{movieObj.vote_average || "N/A"}</td>
                     <td>{movieObj.popularity || "N/A"}</td>
+                    <td>{genresId[movieObj.genre_ids[0]]}</td>
                     <td
                       className="text-red-800 cursor-pointer"
                       onClick={() => handelRemoveFromWatchList(movieObj)}

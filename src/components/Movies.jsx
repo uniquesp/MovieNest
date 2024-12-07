@@ -22,7 +22,7 @@ const Movies = ({handelAddtoWatchList, handelRemoveFromWatchList, watchList}) =>
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=39fba5af64ba3c9c0ce210bee2b374e5&language=en-US&page=${pageNo}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=d8a7df6ca98e02e22c919da126cd4038&language=en-US&page=${pageNo}`
       )
       .then(function (res) {
       // console.log(res.data.results);
