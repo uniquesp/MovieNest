@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 
-const WatchList = ({ watchList, handelRemoveFromWatchList }) => {
+const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
   const [search, setSearch] = useState("");
 
   let handelSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  let sortIncreasing = () => {
+    let sortedInc = watchList.sort((movieA, movieB) => {
+      return movieA.vote_average - movieB.vote_average;
+    });
+    setWatchList([...sortedInc]);
+  };
+
+  let sortDecreasing = () => {
+    let sortedDec = watchList.sort((movieA, movieB) => {
+      return movieB.vote_average - movieA.vote_average;
+    });
+    setWatchList([...sortedDec]);
   };
 
   return (
@@ -39,8 +53,20 @@ const WatchList = ({ watchList, handelRemoveFromWatchList }) => {
           <thead className="border-b-2">
             <tr>
               <th>Name</th>
-              <th>Ratings</th>
-              <th>Popularity</th>
+              <th>
+                <div className="flex items-center justify-center gap-2">
+                  <i onClick={sortIncreasing} className="p-2 fa-solid fa-arrow-up cursor-pointer"></i>
+                  <span>Ratings</span>
+                  <i onClick={sortDecreasing} className="p-2 fa-solid fa-arrow-down cursor-pointer"></i>
+                </div>
+              </th>
+              <th>
+                <div className="flex items-center justify-center gap-2">
+                  <i onClick={sortIncreasing} className="p-2 fa-solid fa-arrow-up cursor-pointer"></i>
+                  <span>Popularity</span>
+                  <i onClick={sortDecreasing} className="p-2 fa-solid fa-arrow-down cursor-pointer"></i>
+                </div>
+              </th>
               <th>Actions</th>
             </tr>
           </thead>

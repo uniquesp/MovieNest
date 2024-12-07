@@ -56,6 +56,7 @@ function App() {
             <WatchList
               watchList={watchList}
               handelRemoveFromWatchList={handelRemoveFromWatchList}
+              setWatchList={setWatchList}
             />
           }
         />
