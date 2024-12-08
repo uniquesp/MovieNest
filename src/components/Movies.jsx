@@ -3,9 +3,12 @@ import axios from "axios";
 import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
 
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 const Movies = ({handelAddtoWatchList, handelRemoveFromWatchList, watchList}) => {
   const [movies, setMovies] = useState([]);
   const [pageNo,setPageNo] = useState(1);
+
 
   const handelPrev= () => {
     if(pageNo===1){
@@ -20,9 +23,13 @@ const Movies = ({handelAddtoWatchList, handelRemoveFromWatchList, watchList}) =>
   }
 
   useEffect(() => {
+    if (!API_KEY) {
+      console.error("API Key is not defined. Check your .env setup.");
+      return;
+    }
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=d8a7df6ca98e02e22c919da126cd4038&language=en-US&page=${pageNo}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNo}`
       )
       .then(function (res) {
       // console.log(res.data.results);
@@ -54,4 +61,4 @@ const Movies = ({handelAddtoWatchList, handelRemoveFromWatchList, watchList}) =>
 };
 
 export default Movies;
-//https://api.themoviedb.org/3/movie/popular?api_key=39fba5af64ba3c9c0ce210bee2b374e5&language=en-US&page=1
+//https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1
