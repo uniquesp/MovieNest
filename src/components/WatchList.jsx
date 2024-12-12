@@ -4,10 +4,14 @@ import genresId from "../utility/genere.js";
 const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
   const [search, setSearch] = useState("");
   const [genreList, setGenreList] = useState(["All Genres"]);
-  
+  const [currGenre, setCurrGenre] = useState("All Genres");
 
   let handelSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  let handelFilter = (genre) => {
+    setCurrGenre(genre);
   };
 
   let sortIncreasing = () => {
@@ -28,6 +32,7 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
     let temp = watchList.map((movieObj) => {
       return genresId[movieObj.genre_ids[0]];
     });
+    temp = new Set(temp)
     setGenreList(["All Genres", ...temp]);
     console.log(temp);
   }, [watchList]);
@@ -38,8 +43,13 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
         {genreList.map((genre, index) => {
           return (
             <div
-              key={index} // Add a unique key
-              className="flex justify-center items-center h-[3rem] w-[9rem] bg-gray-400 rounded-xl text-white font-bold mx-4"
+              key={index}
+              onClick={() => handelFilter(genre)}
+              className={
+                currGenre === genre
+                  ? "flex cursor-pointer justify-center items-center h-[3rem] w-[9rem] bg-blue-400 rounded-xl text-white font-bold mx-4"
+                  : "flex cursor-pointer justify-center items-center h-[3rem] w-[9rem] bg-gray-400 rounded-xl text-white font-bold mx-4"
+              }
             >
               {genre}
             </div>
@@ -101,6 +111,13 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
               </tr>
             ) : (
               watchList
+                .filter((movieObj)=>{
+                  if(currGenre=='All Genres'){
+                    return true
+                  }else{
+                    return genresId[movieObj.genre_ids[0]]==currGenre
+                  }
+                })
                 .filter((movieObj) => {
                   return movieObj.title
                     .toLowerCase()
