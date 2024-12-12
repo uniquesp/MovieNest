@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import genresId from '../utility/genere.js'
+import React, { useEffect, useState } from "react";
+import genresId from "../utility/genere.js";
 
 const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
   const [search, setSearch] = useState("");
+  const [genreList, setGenreList] = useState(["All Genres"]);
+  
 
   let handelSearch = (e) => {
     setSearch(e.target.value);
@@ -22,21 +24,27 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
     setWatchList([...sortedDec]);
   };
 
+  useEffect(() => {
+    let temp = watchList.map((movieObj) => {
+      return genresId[movieObj.genre_ids[0]];
+    });
+    setGenreList(["All Genres", ...temp]);
+    console.log(temp);
+  }, [watchList]);
+
   return (
     <>
       <div className="flex justify-center flex-wrap m-4">
-        <div className="flex justify-center items-center h-[3rem] w-[9rem] bg-blue-400 rounded-xl text-white font-bold mx-4">
-          All Genres
-        </div>
-        <div className="flex justify-center items-center h-[3rem] w-[9rem] bg-gray-400 rounded-xl text-white font-bold mx-4">
-          Action
-        </div>
-        <div className="flex justify-center items-center h-[3rem] w-[9rem] bg-gray-400 rounded-xl text-white font-bold mx-4">
-          Crime
-        </div>
-        <div className="flex justify-center items-center h-[3rem] w-[9rem] bg-gray-400 rounded-xl text-white font-bold mx-4">
-          Comedy
-        </div>
+        {genreList.map((genre, index) => {
+          return (
+            <div
+              key={index} // Add a unique key
+              className="flex justify-center items-center h-[3rem] w-[9rem] bg-gray-400 rounded-xl text-white font-bold mx-4"
+            >
+              {genre}
+            </div>
+          );
+        })}
       </div>
 
       <div className=" flex justify-center my-4">
@@ -56,16 +64,28 @@ const WatchList = ({ watchList, handelRemoveFromWatchList, setWatchList }) => {
               <th>Name</th>
               <th>
                 <div className="flex items-center justify-center gap-2">
-                  <i onClick={sortIncreasing} className="p-2 fa-solid fa-arrow-up cursor-pointer"></i>
+                  <i
+                    onClick={sortIncreasing}
+                    className="p-2 fa-solid fa-arrow-up cursor-pointer"
+                  ></i>
                   <span>Ratings</span>
-                  <i onClick={sortDecreasing} className="p-2 fa-solid fa-arrow-down cursor-pointer"></i>
+                  <i
+                    onClick={sortDecreasing}
+                    className="p-2 fa-solid fa-arrow-down cursor-pointer"
+                  ></i>
                 </div>
               </th>
               <th>
                 <div className="flex items-center justify-center gap-2">
-                  <i onClick={sortIncreasing} className="p-2 fa-solid fa-arrow-up cursor-pointer"></i>
+                  <i
+                    onClick={sortIncreasing}
+                    className="p-2 fa-solid fa-arrow-up cursor-pointer"
+                  ></i>
                   <span>Popularity</span>
-                  <i onClick={sortDecreasing} className="p-2 fa-solid fa-arrow-down cursor-pointer"></i>
+                  <i
+                    onClick={sortDecreasing}
+                    className="p-2 fa-solid fa-arrow-down cursor-pointer"
+                  ></i>
                 </div>
               </th>
               <th>Genere</th>
